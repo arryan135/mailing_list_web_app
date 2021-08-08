@@ -8,15 +8,13 @@ const connection = mysql.createConnection({
   database: "join_us"
 });
 
-const sql_query = "SELECT CURTIME() AS time, CURDATE() AS date, NOW() as now";
+const sql_query = "SELECT COUNT(*) AS total FROM users";
 
 connection.query(sql_query, (error, results, fields) => {
   if (error){
     throw error;
   }
-  console.log(results[0].time);
-  console.log(results[0].date.toString());
-  console.log(results[0].now.toString());
+  console.log(results[0].total);
 });
 
 connection.end();
