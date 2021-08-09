@@ -8,33 +8,21 @@ const connection = mysql.createConnection({
   database: "join_us"
 });
 
-// Selecting Data
-// const sql_query = "SELECT COUNT(*) AS total FROM users";
+let data = [];
 
-// connection.query(sql_query, (error, results, fields) => {
-//   if (error){
-//     throw error;
-//   }
-//   console.log(results[0].total);
-// });
+for (let i = 0; i < 500; i++){
+  data.push([
+    faker.internet.email(),
+    faker.date.past()
+  ]);
+}
 
-// Inserting Data - Take 1
-// const sql_query = 'INSERT INTO users (email) VALUES ("wyatt@gmail.com")';
+let query = 'INSERT INTO users (email, created_at) VALUES ?';
 
-// connection.query(sql_query, (error, results, fields) => {
-//   if (error){
-//     throw error;
-//   }
-//   console.log(results);
-// });
-
-// Inserting Data - Take 2
-const person = {email: faker.internet.email()};
-
-connection.query("INSERT INTO users SET ?", person, (error, results) => {
+connection.query(query, [data], (error, results) => {
   if (error) throw error;
   console.log(results);
-})
+});
 
 connection.end();
 
