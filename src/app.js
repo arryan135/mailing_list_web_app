@@ -2,6 +2,8 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 
+app.set("view engine", "ejs");
+
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -14,7 +16,7 @@ app.get("/", (req, res) => {
   connection.query(query, (error, results) => {
     if (error) throw error;
     var count = results[0].count;
-    res.send(`We have ${count} users in our db`);
+    res.render("home", {count})
   });
 });
 
