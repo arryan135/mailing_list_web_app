@@ -1,8 +1,10 @@
 const express = require("express");
 const mysql = require("mysql");
+const bodyParser = require("body-parser")
 const app = express();
 
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -18,6 +20,10 @@ app.get("/", (req, res) => {
     var count = results[0].count;
     res.render("home", {count})
   });
+});
+
+app.post("/register", (req, res) => {
+  console.log(req.body.email);
 });
 
 app.listen(3000, () => {
